@@ -3,6 +3,6 @@ import * as ReactDOM from 'react-dom';
 import { Header } from '../share/header';
 
 window.addEventListener('load',()=>{
-    ReactDOM.render(<Header/>, document.getElementById('react_root'));
+    ReactDOM.hydrate(<Header/>, document.getElementById('react_root'));
 });
 
