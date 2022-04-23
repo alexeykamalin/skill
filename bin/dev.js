@@ -1,9 +1,27 @@
 const webpack = require('webpack');
-const webpackConfig = require('../webpack.config.js');
+const express = require('exptress');
+const [webpackClientConfig,webpackServerConfig] = require('../webpack.config.js');
 const nodemon = require('nodemon');
 const path = require('path');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 
-const compiler = webpack(webpackConfig);
+const hrmServer = express();
+const clientCompiler = webpack(webpackClientConfig);
+
+hrmServer.use(webpackDevMiddleware(clientCompiler,{
+    publicPath: webpackClientConfig.output.publicPath,
+    serverSiderender: true,
+    noInfo: true,
+    watchOptions:{
+        ignore:'/dist/',
+    },
+    writeToDisck: true,
+    stats: 'error-only,'
+}));
+
+
+const compiler = webpack(webpackServerConfig);
 
 compiler.run((err)=>{
     if (err){
