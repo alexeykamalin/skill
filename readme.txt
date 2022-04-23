@@ -1,2 +1,1 @@
-me first app
-test vs code commit
+npm i -D webpack-node-externals
