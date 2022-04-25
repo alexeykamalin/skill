@@ -1,6 +1,6 @@
 const path = require('path');
 const { HotModuleReplacementPlugin } = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpak-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
 const IS_DEV = NODE_ENV == 'development';
@@ -27,7 +27,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname,'../dist/client'),
         filename: 'client.js',
-        publicPath: '/static',
+        publicPath: '/static/',
     },
     module:{
         rules: [{

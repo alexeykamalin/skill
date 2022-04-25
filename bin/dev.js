@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const express = require('exptress');
+const express = require('express');
 const [webpackClientConfig,webpackServerConfig] = require('../webpack.config.js');
 const nodemon = require('nodemon');
 const path = require('path');
@@ -19,6 +19,14 @@ hrmServer.use(webpackDevMiddleware(clientCompiler,{
     writeToDisck: true,
     stats: 'error-only,'
 }));
+
+hrmServer.use(webpackHotMiddleware(clientCompiler,{
+    path: '/static__webpack_hmr',
+}));
+
+hrmServer.listen(3001,()=>{
+    console.log('hrm is ok')
+})
 
 
 const compiler = webpack(webpackServerConfig);
