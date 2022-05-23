@@ -25,7 +25,7 @@ hrmServer.use(webpackHotMiddleware(clientCompiler,{
 }));
 
 hrmServer.listen(3001,()=>{
-    console.log('hrm is ok')
+    console.log('hmr is ok')
 })
 
 
