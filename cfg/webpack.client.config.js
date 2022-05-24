@@ -3,8 +3,8 @@ const { HotModuleReplacementPlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
-const IS_DEV = NODE_ENV == 'development';
-const IS_PROD = NODE_ENV == 'production';
+const IS_DEV = NODE_ENV === 'development';
+const IS_PROD = NODE_ENV === 'production';
 
 function setupDevtool(){
     if (IS_DEV) return 'eval';
@@ -29,17 +29,39 @@ module.exports = {
         filename: 'client.js',
         publicPath: '/static/',
     },
-    module:{
-        rules: [{
-            test: /\.[tj]sx?$/,
-            use: ['ts-loader']
-        }]
-    },
+    module: {
+        rules: [
+          {
+            test: /\.[jt]sx?$/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-react']
+                }
+            }
+          },
+          {
+            test: /\.[s]css?$/,
+            use: [
+              "style-loader", {
+                loader: "css-loader",
+                options: {
+                  modules: {
+                    mode: "local",
+                    localIdentName: "[name]__[local]--[hash:base64:5]",
+                  }
+                }
+              },
+              "sass-loader"
+            ]
+          }
+        ]
+      },
     devtool: setupDevtool(),
     plugins: IS_DEV ? 
         [ 
             new CleanWebpackPlugin(),
             new HotModuleReplacementPlugin(),
             
-        ] : []
+        ] : [],
 };

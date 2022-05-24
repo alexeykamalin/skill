@@ -1,10 +1,10 @@
 const webpack = require('webpack');
-const express = require('express');
+const path = require('path');
 const [webpackClientConfig,webpackServerConfig] = require('../webpack.config.js');
 const nodemon = require('nodemon');
-const path = require('path');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const express = require('express');
 
 const hrmServer = express();
 const clientCompiler = webpack(webpackClientConfig);
@@ -17,7 +17,7 @@ hrmServer.use(webpackDevMiddleware(clientCompiler,{
         ignore:'/dist/',
     },
     writeToDisck: true,
-    stats: 'error-only,'
+    stats: 'error-only',
 }));
 
 hrmServer.use(webpackHotMiddleware(clientCompiler,{
